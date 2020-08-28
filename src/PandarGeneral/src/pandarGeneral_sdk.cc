@@ -133,6 +133,7 @@ void PandarGeneralSDK::GetCalibrationFromDevice() {
       ret = TcpCommandGetLidarCalibration(tcp_command_client_, &buffer, &len);
       if (ret == 0 && buffer) {
         // success;
+    	std::cout << "Loaded correction file from sensor." << std::endl;
         got_lidar_calibration_ = true;
         correction_content_ = std::string(buffer);
         if (pandarGeneral_) {

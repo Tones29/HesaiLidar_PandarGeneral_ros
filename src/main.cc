@@ -48,6 +48,10 @@ public:
     pcl_conversions::toPCL(ros::Time(timestamp), cld->header.stamp);
     sensor_msgs::PointCloud2 output;
     pcl::toROSMsg(*cld, output);
+
+    // Hack: Overwrite with current time, as PTP is not available
+    output.header.stamp = ros::Time::now();
+
     lidarPublisher.publish(output);
   }
 
@@ -58,6 +62,10 @@ private:
 
 int main(int argc, char **argv)
 {
+
+  //std::cout << "Press ENTER to contiue..." << std::endl;
+  //cin.get();
+
   ros::init(argc, argv, "pandar");
   ros::NodeHandle nh("~");
   ros::NodeHandle node;
